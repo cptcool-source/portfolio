@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>chuck design — Portfolio</title>
+  <meta name="description" content="Web design portfolio of Charles Spivey — chuck design, North Port FL.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <a href="https://chuckdesign.com" class="wordmark" aria-label="chuck design">
+      <span class="name">chuck</span>
+      <em class="descriptor">design</em>
+    </a>
+  </header>
+
+  <!-- Carousel -->
+  <section class="stage" id="stage" aria-label="Portfolio carousel"></section>
+
+  <!-- Logo lockup -->
+  <section class="logo-section" aria-label="chuck design">
+    <div class="pf-logo">
+      <div class="pf-logo-row">
+        <span class="pf-logo-name">chuck</span>
+        <span class="pf-logo-dot" aria-hidden="true"></span>
+      </div>
+      <span class="pf-logo-sub">design</span>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="pf-footer">
+    <div class="pf-footer-inner">
+      <a href="https://chuckdesign.com" class="pf-footer-logo">chuck<em> design</em></a>
+      <span class="pf-footer-copy">&copy; 2026 Charles Spivey &nbsp;&middot;&nbsp; North Port, FL 34291</span>
+      <a href="mailto:charles@chuckdesign.com" class="pf-footer-email">charles@chuckdesign.com</a>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true">
+    <button class="lb-close" id="lb-close" aria-label="Close">&times;</button>
+    <div class="lb-zoom-wrap" id="lb-zoom-wrap">
+      <img class="lb-img" id="lb-img" src="" alt="">
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

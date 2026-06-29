@@ -1,0 +1,321 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #0A0A0A;
+  --fg:      #FAFAF8;
+  --accent:  #E05C3A;
+  --sans:    'Outfit', sans-serif;
+  --mono:    'Geist Mono', monospace;
+  --card-w:  560px;
+  --card-r:  14px;
+  --img-r:   7px;
+  --pad:     10px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100%;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+
+header {
+  position: fixed;
+  top: 2.25rem;
+  left: 3rem;
+  z-index: 100;
+}
+
+.wordmark {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  gap: 0.05rem;
+}
+
+.wordmark .name {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--fg);
+  letter-spacing: -0.03em;
+}
+
+.wordmark .descriptor {
+  font-weight: 300;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+/* ── Stage ──────────────────────────────────────────────────── */
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* ── Cards ──────────────────────────────────────────────────── */
+
+.card {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: var(--card-w);
+  aspect-ratio: 1280 / 900;
+  cursor: pointer;
+  will-change: transform, opacity;
+  transition:
+    transform 0.42s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity   0.42s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Blurred coral blob — always visible, bleeds beyond card bounds */
+.card-glow {
+  position: absolute;
+  top: -18px;
+  bottom: -18px;
+  left: -32px;
+  right: -32px;
+  background: var(--accent);
+  border-radius: 28px;
+  filter: blur(38px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Solid coral face — only shown on the active (center) card */
+.card-face {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  border-radius: var(--card-r);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+/* Image — only shown on the active card */
+.card-img {
+  position: absolute;
+  top: var(--pad);
+  left: var(--pad);
+  right: var(--pad);
+  bottom: var(--pad);
+  border-radius: var(--img-r);
+  overflow: hidden;
+  background: #111;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  pointer-events: none;
+}
+
+.card-img.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+}
+
+.card-img.placeholder span {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: rgba(250, 250, 248, 0.25);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── Lightbox ───────────────────────────────────────────────── */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(0, 0, 0, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+
+.lightbox.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.lb-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  background: none;
+  border: none;
+  color: rgba(250, 250, 248, 0.45);
+  font-size: 1.4rem;
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 1;
+  transition: color 0.2s;
+  padding: 0.25rem;
+}
+
+.lb-close:hover { color: var(--fg); }
+
+.lb-zoom-wrap {
+  transform-origin: center center;
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+}
+
+.lb-img {
+  display: block;
+  max-width: 88vw;
+  max-height: 88vh;
+  border-radius: 8px;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Logo section ───────────────────────────────────────────── */
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44vh;
+  padding: 5rem 3rem;
+  background: var(--bg);
+}
+
+.pf-logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.pf-logo-row {
+  display: flex;
+  align-items: flex-end;
+}
+
+.pf-logo-name {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: clamp(72px, 11vw, 148px);
+  letter-spacing: -0.04em;
+  color: var(--fg);
+}
+
+.pf-logo-dot {
+  width: clamp(11px, 1.65vw, 22px);
+  height: clamp(11px, 1.65vw, 22px);
+  background: var(--accent);
+  flex-shrink: 0;
+  margin-left: clamp(5px, 0.7vw, 9px);
+  margin-bottom: clamp(8px, 1.2vw, 16px);
+}
+
+.pf-logo-sub {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(18px, 2.75vw, 38px);
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  margin-top: clamp(4px, 0.6vw, 8px);
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+
+.pf-footer {
+  border-top: 1px solid rgba(250, 250, 248, 0.07);
+  padding: 28px 3rem;
+  background: var(--bg);
+}
+
+.pf-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.pf-footer-logo {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.pf-footer-logo em {
+  font-weight: 300;
+  font-style: italic;
+  color: var(--accent);
+}
+
+.pf-footer-copy {
+  font-size: 12px;
+  font-family: var(--mono);
+  color: rgba(250, 250, 248, 0.35);
+  margin-right: auto;
+  letter-spacing: 0.04em;
+}
+
+.pf-footer-email {
+  font-size: 12px;
+  font-family: var(--mono);
+  color: rgba(250, 250, 248, 0.35);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.pf-footer-email:hover { color: var(--accent); }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  :root { --card-w: 380px; --pad: 8px; }
+}
+
+@media (max-width: 700px) {
+  :root { --card-w: 290px; --card-r: 10px; --pad: 7px; --img-r: 5px; }
+  header { top: 1.5rem; left: 1.75rem; }
+  .logo-section { padding: 4rem 2rem; min-height: 36vh; }
+  .pf-footer { padding: 24px 2rem; }
+  .pf-footer-inner { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .pf-footer-copy  { margin-right: 0; }
+  .lb-img { max-width: 96vw; max-height: 80vh; }
+}
+
+@media (max-width: 400px) {
+  :root { --card-w: 240px; }
+}
